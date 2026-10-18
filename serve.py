@@ -40,7 +40,7 @@ def make_server(db, port=8000, web=None, quiet=True):
                 self.send_response(404); self.send_header("Content-Type", "text/html; charset=utf-8"); self.send_header("Content-Length", str(len(msg))); self.end_headers(); return self.wfile.write(msg)
             b = open(f, "rb").read(); self.send_response(200)
             self.send_header("Content-Type", TYPES[os.path.splitext(f)[1]]); self.send_header("Content-Length", str(len(b))); self.end_headers(); self.wfile.write(b)
-    return ThreadingHTTPServer(("127.0.0.1", port), H)
+    return ThreadingHTTPServer((os.getenv("HOST", "127.0.0.1"), port), H)
 
 if __name__ == "__main__":
     db = E.connect(os.getenv("SMARTCLAIM_DB", "smartclaim.db"))
